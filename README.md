@@ -1,4 +1,4 @@
-# gulp-css-url-rebase [![Build Status](https://travis-ci.org/42Zavattas/gulp-css-url-rebase.svg?branch=master)](https://travis-ci.org/42Zavattas/gulp-css-url-rebase) [![Dependency Status](https://david-dm.org/42Zavattas/gulp-css-url-rebase.svg)](https://david-dm.org/42Zavattas/gulp-css-url-rebase)
+# gulp-css-url-rebase [![Build Status](https://travis-ci.org/42Zavattas/gulp-css-url-rebase.svg?branch=master)](https://travis-ci.org/42Zavattas/gulp-css-url-rebase) [![Dependency Status](https://david-dm.org/42Zavattas/gulp-css-url-rebase.svg)](https://david-dm.org/42Zavattas/gulp-css-url-rebase) [![Used by](https://img.shields.io/badge/used%20by-bangular-blue.svg)](https://github.com/42Zavattas/generator-bangular)
 
 > Rebase relative image URLs
 
