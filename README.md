@@ -22,6 +22,33 @@ gulp.task('default', function () {
 });
 ```
 
+rebase urls and copy files
+
+```javascript
+var gulp = require('gulp');
+var rebase = require('gulp-css-url-rebase');
+
+gulp.task('default', function () {
+  gulp.src(['css/**/*.css','plugins/font-awesome/css/font-awesome.min.css','plugins/bootstrap/css/bootstrap.min.css'])
+    .pipe(rebase({
+        copyFiles:{
+            //urls in css will be rebased relative to publicPath
+            publicPath: "./",
+            //where to copy the files
+            filePath: path.join(__dirname, 'dist/assets/'),
+            inline:{
+                //file types to be converted to data uri
+                test:/\.(png|jpg|gif)$/,
+                //file size limit for data uri
+                limit:1000
+            }
+        }    
+    }))
+     .pipe(concat('style.css'))
+     .pipe(gulp.dest('./build/'));
+});
+```
+
 ## What it tries to solve
 
 Let's say you have this structure:
@@ -65,3 +92,4 @@ production. I want this final file for the css above:
   background: url('img/logo.jpg') no-repeat top left;
 }
 ```
+
