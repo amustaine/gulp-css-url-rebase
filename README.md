@@ -35,9 +35,9 @@ gulp.task('default', function () {
     .pipe(rebase({
         copyFiles:{
             //urls in css will be rebased relative to publicPath
-            publicPath: "./",
+            publicPath: "./assets",
             //where to copy the files
-            filePath: path.join(__dirname, 'dist/assets/'),
+            filePath: './build/assets/',
             inline:{
                 //file types to be converted to data uri
                 test:/\.(png|jpg|gif)$/,
