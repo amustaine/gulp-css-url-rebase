@@ -29,7 +29,9 @@ var gulp = require('gulp');
 var rebase = require('gulp-css-url-rebase');
 
 gulp.task('default', function () {
-  gulp.src(['css/**/*.css','plugins/font-awesome/css/font-awesome.min.css','plugins/bootstrap/css/bootstrap.min.css'])
+  gulp.src(['css/**/*.css',
+            'plugins/font-awesome/css/font-awesome.min.css',
+            'plugins/bootstrap/css/bootstrap.min.css'])
     .pipe(rebase({
         copyFiles:{
             //urls in css will be rebased relative to publicPath
