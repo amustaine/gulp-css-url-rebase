@@ -93,7 +93,8 @@ And in `dep2/css/style.css`:
 ```
 
 When I minify everything, for example to be in `dist/style.css` in
-production. I want this final file for the css above, and all the files are copied to dist/assets/img/
+production. I want this final file for the css above, 
+and all the files are copied to dist/assets/img/, so I don't bother will all the urls in css 
 
 ```css
 .sel {
