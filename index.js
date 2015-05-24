@@ -120,7 +120,6 @@ module.exports = function (options) {
     return through.obj(function (file, enc, cb) {
         var resp = rebaseUrls(file.contents.toString(), {
             currentDir: path.dirname(file.path),
-            file: file,
             root: path.join(file.cwd, root),
             copyFiles: options.copyFiles
         });
