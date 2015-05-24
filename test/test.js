@@ -69,7 +69,7 @@ describe('gulp-css-url-rebase', function () {
                         folder: 'font'
                     }
                 ],
-                rev: true
+                rev: false
             }
 
         });

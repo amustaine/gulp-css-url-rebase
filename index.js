@@ -49,7 +49,6 @@ var rebaseUrls = function (css, options) {
                 console.log('absolutePath', absolutePath);
                 var urlObj = urlHelper.parse(absolutePath);
                 try {
-
                     if (stat = fs.statSync(urlObj.pathname)) {
                         var filename = path.basename(url),
                             targetFilename = path.basename(urlObj.pathname),
@@ -98,7 +97,7 @@ var rebaseUrls = function (css, options) {
 
                     }
                 } catch (e) {
-                    console.error(e.stack);
+                    console.error(e.message);
                 }
 
             }

@@ -74,20 +74,29 @@ Let's say you have this structure:
      └ icons/
        ├ home.png
        └ cancel.png
-
-In `css/style.css` you might have:
+       
+    bower_components
+    ├ dep1
+    │    ├ images/*
+    │    └ css/
+    │        └ style.css
+    ├ dep2
+    │    ├ images/*
+    │    └ css/
+    │        └ style.css
+In `dep1/css/style.css` you might have:
 
 ```css
 .sel {
-  background: url('../img/icons/home.png') no-repeat top left;
+  background: url('../images/icons/home.png') no-repeat top left;
 }
 ```
 
-And in `css/some/deep-path/style.css`:
+And in `dep2/css/style.css`:
 
 ```css
 .item {
-  background: url('../../../img/logo.jpg') no-repeat top left;
+  background: url('../images/logo.jpg') no-repeat top left;
 }
 ```
 
