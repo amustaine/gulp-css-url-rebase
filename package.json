@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/42Zavattas/gulp-css-url-rebase.git"
+    "url": "git://github.com/gitawego/gulp-css-url-rebase.git"
   },
   "keywords": [
     "url-rebase",
@@ -37,7 +37,8 @@
   ],
   "author": "Kim Joar Bekkelund <kjbekkelund@gmail.com>",
   "contributors": [
-    "Balthazar Gronon <bgronon@gmail.com>"
+    "Balthazar Gronon <bgronon@gmail.com>",
+    "Hongbo LU <gitawego@gmail.com>"
   ],
   "license": "MIT",
   "bugs": {

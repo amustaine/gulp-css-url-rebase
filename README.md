@@ -63,27 +63,19 @@ gulp.task('default', function () {
 
 Let's say you have this structure:
 
-    css
-    ├ style.css
-    ├ some
-    │  └ deep-path/
-    │     └ style.css
-    img
-     ├ logo.png
-     ├ cat.png
-     └ icons/
-       ├ home.png
-       └ cancel.png
+  
        
     bower_components
     ├ dep1
-    │    ├ images/*
-    │    └ css/
-    │        └ style.css
+    │   ├ images/*
+    │   └ css/
+    │       └ style.css
     ├ dep2
-    │    ├ images/*
-    │    └ css/
-    │        └ style.css
+    │   ├ images/*
+    │   └ css/
+    │       └ style.css
+    dist/
+    
 In `dep1/css/style.css` you might have:
 
 ```css
@@ -100,15 +92,15 @@ And in `dep2/css/style.css`:
 }
 ```
 
-When I minify everything, for example to be in `./style.css` in
-production. I want this final file for the css above:
+When I minify everything, for example to be in `dist/style.css` in
+production. I want this final file for the css above, and all the files are copied to dist/assets/img/
 
 ```css
 .sel {
-  background: url('img/icons/home.jpg') no-repeat top left;
+  background: url('dist/assets/img/icons/home.jpg') no-repeat top left;
 }
 .item {
-  background: url('img/logo.jpg') no-repeat top left;
+  background: url('dist/assets/img/logo.jpg') no-repeat top left;
 }
 ```
 
