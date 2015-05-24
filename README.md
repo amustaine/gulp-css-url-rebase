@@ -38,12 +38,20 @@ gulp.task('default', function () {
             publicPath: "./assets",
             //where to copy the files
             filePath: './build/assets/',
-            inline:{
-                //file types to be converted to data uri
-                test:/\.(png|jpg|gif)$/,
-                //file size limit for data uri
-                limit:1000
-            }
+            fileTypes: [
+                {
+                    //match file extensions
+                    test: /\.(png|jpg|gif)$/,
+                    //subfolder relative to filePath
+                    folder: 'img',
+                    //max file size for data uri in kb
+                    inlineLimit: 100
+                },
+                {
+                    test: /\.(woff|woff2|eot|ttf|svg)(\?.*?|)$/,
+                    folder: 'font'
+                }
+            ]
         }    
     }))
      .pipe(concat('style.css'))

@@ -46,31 +46,42 @@ var rebaseUrls = function (css, options) {
                     p = p.replace(/\\/g, '/');
                 }
             } else {
+                console.log('absolutePath', absolutePath);
                 var urlObj = urlHelper.parse(absolutePath);
                 try {
 
                     if (stat = fs.statSync(urlObj.pathname)) {
-                        copyFiles.inline.limit *= 1024;
                         var filename = path.basename(url),
                             targetFilename = path.basename(urlObj.pathname),
                             targetFullFilename = filename,
                             mimeType = mime.lookup(urlObj.pathname),
-                            fileContent;
-                        if (copyFiles.inline
-                            && copyFiles.inline.test.test(absolutePath)
-                            && stat.size <= copyFiles.inline.limit) {
-                            fileContent = fs.readFileSync(urlObj.pathname).toString('base64');
-                            //base64
-                            p = 'data:' + mimeType + ';base64,' + fileContent;
+                            loader = {};
+                        if (copyFiles.fileTypes) {
+                            copyFiles.fileTypes.some(function (l) {
+                                if (l.test.test(absolutePath)) {
+                                    loader = l;
+                                    return true;
+                                }
+                            });
+                        }
+                        if (loader.inlineLimit && stat.size <= loader.inlineLimit * 1024) {
+                            p = 'data:' + mimeType + ';base64,' +
+                                fs.readFileSync(urlObj.pathname).toString('base64');
                         } else {
                             if (copyFiles.rev) {
                                 var rev = 'rev' + Date.now();
                                 targetFullFilename = rev + '_' + targetFullFilename;
                                 targetFilename = rev + '_' + targetFilename;
                             }
-                            mkdirp.sync(copyFiles.filePath);
+                            var finalDestPath = copyFiles.filePath;
+                            var finalPublicPath = copyFiles.publicPath;
+                            if (loader.folder) {
+                                finalDestPath = path.join(finalDestPath, loader.folder);
+                                finalPublicPath = path.normalize(finalPublicPath + path.sep + loader.folder);
+                            }
+                            mkdirp.sync(finalDestPath);
                             tasks.push(function (next) {
-                                var ws = fs.createWriteStream(path.join(copyFiles.filePath, targetFilename));
+                                var ws = fs.createWriteStream(path.join(finalDestPath, targetFilename));
                                 var rs = fs.createReadStream(urlObj.pathname);
                                 ws.on('close', next);
                                 ws.on('error', function (err) {
@@ -82,7 +93,7 @@ var rebaseUrls = function (css, options) {
                                 rs.pipe(ws);
                             });
 
-                            p = path.normalize(copyFiles.publicPath + '/' + targetFullFilename);
+                            p = path.normalize(finalPublicPath + path.sep + targetFullFilename);
                         }
 
                     }
@@ -116,6 +127,7 @@ module.exports = function (options) {
         });
         file.contents = new Buffer(resp.css);
         this.push(file);
+        console.log('resp.tasks', resp.tasks);
         if (resp.tasks.length) {
             asyncTasks(resp.tasks, cb);
         } else {

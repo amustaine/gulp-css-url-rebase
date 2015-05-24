@@ -7,7 +7,7 @@ var assert = require('assert');
 var gutil = require('gulp-util');
 var cssRebaseUrls = require('../index');
 
-var testPath = path.join(path.resolve('.'));
+var testPath = __dirname;
 
 var read = function (name) {
     return fs.readFileSync(path.join(__dirname, name));
@@ -25,7 +25,7 @@ describe('gulp-css-url-rebase', function () {
         });
 
         stream.write(new gutil.File({
-            base: testPath+'/1',
+            base: testPath + '/1',
             path: testPath + '/1/style.css',
             contents: read('1/test.css')
         }));
@@ -44,7 +44,7 @@ describe('gulp-css-url-rebase', function () {
         });
 
         stream.write(new gutil.File({
-            base: testPath+'/2',
+            base: testPath + '/2',
             path: testPath + '/2/style.css',
             contents: read('2/test.css')
         }));
@@ -58,10 +58,17 @@ describe('gulp-css-url-rebase', function () {
             copyFiles: {
                 publicPath: "./dist/",
                 filePath: path.join(__dirname, '3/expected'),
-                inline: {
-                    test: /\.(png|jpg|gif)$/,
-                    limit: 100
-                },
+                fileTypes: [
+                    {
+                        test: /\.(png|jpg|gif)$/,
+                        folder: 'img',
+                        inlineLimit: 100
+                    },
+                    {
+                        test: /\.(woff|woff2|eot|ttf|svg)(\?.*?|)$/,
+                        folder: 'font'
+                    }
+                ],
                 rev: true
             }
 
@@ -75,7 +82,7 @@ describe('gulp-css-url-rebase', function () {
         });
 
         stream.write(new gutil.File({
-            base: testPath+'/3',
+            base: testPath + '/3',
             path: testPath + '/3/style.css',
             contents: read('3/test.css')
         }));
