@@ -5,14 +5,13 @@ var fs = require('fs');
 var urlHelper = require('url');
 var mime = require('mime');
 var mkdirp = require('mkdirp');
-var rework = require('rework');
-var reworkUrl = require('rework-plugin-url');
 var through = require('through2');
 var validator = require('validator');
 var regxps = {
     cssUrl: /url\(['"](.*?)['"]\)|url\(([^'"].*?[^'"])\)/gi,
     //"cssPaths": /(?:(?:@import\s*(['"])(?![a-z]+:|\/)([^\r\n;{]+?)\1)|url\(\s*(['"]?)(?![a-z]+:|\/)([^\r\n;]+?)\3\s*\))([a-z, \s]*[;}]?)/g,
-    "cssPaths": /((@import)\s.*url\((['"]|)(.*?)(['"]|)\))|(url\((['"]|)(.*?)(['"]|)\))/g,
+    //"cssPaths": /((@import)\s.*url\((['"]|)(.*?)(['"]|)\))|(url\((['"]|)(.*?)(['"]|)\))/g,
+    "cssPaths": /((@import)\s.*?url\((['"]|)(.*?)\3\))|(url\((['"]|)(.*?)\6\))/g,
     "blockComment": /\/\*[\s\S]*?\*\/|\/\/.*/gi
 }
 
@@ -34,7 +33,7 @@ var isAbsolute = function (p) {
 };
 var parseUrl = function (content, baseUrl, cb) {
     return content.replace(regxps.blockComment, "").replace(regxps.cssPaths,
-        function (ignore, fullMatch, importTag, delim, importUrl, delim2, imgUrlMatch, delim3, imgUrl, delim4) {
+        function (ignore, fullMatch, importTag, delim, importUrl, imgUrlMatch, delim2, imgUrl) {
             var url = importUrl || imgUrl;
             var absPath = path.resolve(baseUrl, url);
             var origStr = fullMatch || imgUrlMatch;
