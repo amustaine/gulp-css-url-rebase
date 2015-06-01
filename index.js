@@ -96,7 +96,7 @@ var rebaseUrls = function (css, options) {
                             fs.readFileSync(urlObj.pathname).toString('base64');
                     } else {
                         if (copyFiles.rev) {
-                            var rev = 'rev' + Date.now();
+                            var rev = 'rev_' + Date.now();
                             targetFullFilename = rev + '_' + targetFullFilename;
                             targetFilename = rev + '_' + targetFilename;
                         }
