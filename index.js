@@ -60,7 +60,7 @@ var rebaseUrls = function (css, options) {
 
     var reworkedCss = parseUrl(css, options.currentDir, function (url) {
         //console.log('url', url);
-        if (validator.isURL(url) || /^(data:.*;.*,)/.test(url)) {
+        if (/*validator.isURL(url) ||*/ /^(data:.*;.*,)/.test(url)) {
             return url;
         }
         var absolutePath = path.join(options.currentDir, url), p, stat,
@@ -90,6 +90,9 @@ var rebaseUrls = function (css, options) {
                                 return true;
                             }
                         });
+                    }
+                    if(0 === Object.keys(loader).length) {
+                        return false;
                     }
                     if (loader.inlineLimit && stat.size <= loader.inlineLimit * 1024) {
                         p = 'data:' + mimeType + ';base64,' +
@@ -146,7 +149,7 @@ module.exports = function (options) {
     options = options || {};
     var root = options.root || '.';
     return through.obj(function (file, enc, cb) {
-        console.log('file.path', file.path);
+        // console.log('file.path', file.path);
         var resp = rebaseUrls(file.contents.toString(), {
             currentDir: path.dirname(file.path),
             root: path.join(file.cwd, root),
@@ -154,7 +157,7 @@ module.exports = function (options) {
         });
         file.contents = new Buffer(resp.css);
         this.push(file);
-        console.log('resp.tasks', resp.tasks);
+        // console.log('resp.tasks', resp.tasks);
         if (resp.tasks.length) {
             asyncTasks(resp.tasks, cb);
         } else {
